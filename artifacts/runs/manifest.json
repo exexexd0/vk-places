@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-10-10T12:52:42.833178+00:00",
+  "embedding_model": "baai/bge-m3",
+  "embedding_dim": 1024,
+  "chat_model": "openai/gpt-4o-mini",
+  "jev_model": "~typesafe/jev-latest",
+  "prompts_file": "rag/prompts.py",
+  "source_sha256": "5d0c3c22fb11c1f13d4514f60c3e1673874420ea43cbac28fe135263b9400718",
+  "source_count": 1715,
+  "kept": 443,
+  "by_category": {
+    "culture": 87,
+    "entertainment": 29,
+    "mall": 76,
+    "food": 227,
+    "nature": 23,
+    "sport": 1
+  },
+  "index": {
+    "count": 443,
+    "embedding_dim": 1024,
+    "by_category": {
+      "culture": 87,
+      "entertainment": 29,
+      "food": 227,
+      "mall": 76,
+      "nature": 23,
+      "sport": 1
+    }
+  },
+  "selection_sources": [
+    "jev"
+  ],
+  "env_included": true,
+  "dependency_versions": {
+    "langchain-postgres": "0.0.19",
+    "langchain-openai": "1.7.0",
+    "langgraph": "1.2.14",
+    "pgvector": "0.3.6"
+  }
+}

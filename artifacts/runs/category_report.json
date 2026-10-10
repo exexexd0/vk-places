@@ -1,0 +1,29 @@
+{
+  "source_count": 1715,
+  "kept": 443,
+  "dropped": {
+    "not_in_whitelist": 1248,
+    "blacklist": 11,
+    "duplicate_org_id": 13
+  },
+  "by_category": {
+    "culture": 87,
+    "entertainment": 29,
+    "mall": 76,
+    "food": 227,
+    "nature": 23,
+    "sport": 1
+  },
+  "index": {
+    "count": 443,
+    "embedding_dim": 1024,
+    "by_category": {
+      "culture": 87,
+      "entertainment": 29,
+      "food": 227,
+      "mall": 76,
+      "nature": 23,
+      "sport": 1
+    }
+  }
+}

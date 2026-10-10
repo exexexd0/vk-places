@@ -1,0 +1,64 @@
+{
+  "route_title": "Прогулка по Иваново",
+  "city": "Иваново",
+  "user_query": "Хочу прогуляться по торговому центру и сходить в парк",
+  "required_points": [
+    "mall",
+    "nature"
+  ],
+  "stopped_reason": null,
+  "steps": [
+    {
+      "order": 1,
+      "category": "mall",
+      "selection_source": "jev",
+      "primary": {
+        "org_id": "1604911450",
+        "name": "ТЦ",
+        "address": "проспект Строителей, 76",
+        "lat": 56.96483,
+        "lon": 41.003341,
+        "rating": 4.1,
+        "category": "mall",
+        "confidence": 0.74,
+        "order": 1
+      },
+      "backup": {
+        "org_id": "128244678747",
+        "name": "Торговый центр",
+        "address": "проспект Текстильщиков, 39. Смотреть 3 фото, панорамы, часы работы. Посмотреть входы на карте и построить маршрут в Яндекс Картах.",
+        "lat": 56.956552,
+        "lon": 41.000804,
+        "rating": null,
+        "category": "mall",
+        "confidence": 0.13
+      }
+    },
+    {
+      "order": 2,
+      "category": "nature",
+      "selection_source": "jev",
+      "primary": {
+        "org_id": "58762323894",
+        "name": "Парк Степанова",
+        "address": "",
+        "lat": 57.021676,
+        "lon": 40.940313,
+        "rating": 4.5,
+        "category": "nature",
+        "confidence": 0.63,
+        "order": 2
+      },
+      "backup": {
+        "org_id": "94243697343",
+        "name": "Шереметьевский парк",
+        "address": "Улица СпартакаКраснопрудная улицаПоказать парковкиОсобенностиГородской паркСкверЛесопаркПодробнее об организацииПанорамаПанорамаПосещаемость и график работы00",
+        "lat": 57.003691,
+        "lon": 40.99243,
+        "rating": 4.4,
+        "category": "nature",
+        "confidence": 0.27
+      }
+    }
+  ]
+}
