@@ -1,64 +1,124 @@
 {
-  "route_title": "Прогулка по Иваново",
+  "route_title": "Маршрут для ярких эмоций и пиццы",
   "city": "Иваново",
-  "user_query": "Хочу прогуляться по торговому центру и сходить в парк",
+  "user_query": "Я хочу поесть пиццы, поиграть в баскетбол и ярких эмоций",
+  "transport_mode": "walk",
   "required_points": [
-    "mall",
-    "nature"
+    "food",
+    "sport",
+    "entertainment"
   ],
+  "precedence": [],
+  "fixed_first": null,
+  "fixed_last": null,
   "stopped_reason": null,
   "steps": [
     {
       "order": 1,
-      "category": "mall",
+      "category": "food",
       "selection_source": "jev",
       "primary": {
-        "org_id": "1604911450",
-        "name": "ТЦ",
-        "address": "проспект Строителей, 76",
-        "lat": 56.96483,
-        "lon": 41.003341,
-        "rating": 4.1,
-        "category": "mall",
-        "confidence": 0.74,
+        "org_id": "223340493117",
+        "name": "Печь",
+        "address": "",
+        "lat": 56.994519,
+        "lon": 40.979385,
+        "rating": 5.0,
+        "category": "food",
+        "confidence": 0.73,
+        "avg_visit_duration_min": null,
         "order": 1
       },
       "backup": {
-        "org_id": "128244678747",
-        "name": "Торговый центр",
-        "address": "проспект Текстильщиков, 39. Смотреть 3 фото, панорамы, часы работы. Посмотреть входы на карте и построить маршрут в Яндекс Картах.",
-        "lat": 56.956552,
-        "lon": 41.000804,
-        "rating": null,
-        "category": "mall",
-        "confidence": 0.13
+        "org_id": "1151398598",
+        "name": "Люмьер",
+        "address": "ул. 8 Марта, 32",
+        "lat": 57.005732,
+        "lon": 40.983182,
+        "rating": 4.3,
+        "category": "food",
+        "confidence": 0.22,
+        "avg_visit_duration_min": null
       }
     },
     {
       "order": 2,
-      "category": "nature",
+      "category": "sport",
       "selection_source": "jev",
       "primary": {
-        "org_id": "58762323894",
-        "name": "Парк Степанова",
-        "address": "",
-        "lat": 57.021676,
-        "lon": 40.940313,
-        "rating": 4.5,
-        "category": "nature",
-        "confidence": 0.63,
+        "org_id": "89233756764",
+        "name": "Восток",
+        "address": "ул. Куконковых, 92Б, Иваново",
+        "lat": 56.970958,
+        "lon": 41.01161,
+        "rating": null,
+        "category": "sport",
+        "confidence": 1.0,
+        "avg_visit_duration_min": null,
         "order": 2
       },
+      "backup": null
+    },
+    {
+      "order": 3,
+      "category": "entertainment",
+      "selection_source": "jev",
+      "primary": {
+        "org_id": "143702844298",
+        "name": "Wow! land",
+        "address": "ул. 8 Марта, 32",
+        "lat": 57.005359,
+        "lon": 40.986532,
+        "rating": 5.0,
+        "category": "entertainment",
+        "confidence": 0.7,
+        "avg_visit_duration_min": null,
+        "order": 3
+      },
       "backup": {
-        "org_id": "94243697343",
-        "name": "Шереметьевский парк",
-        "address": "Улица СпартакаКраснопрудная улицаПоказать парковкиОсобенностиГородской паркСкверЛесопаркПодробнее об организацииПанорамаПанорамаПосещаемость и график работы00",
-        "lat": 57.003691,
-        "lon": 40.99243,
-        "rating": 4.4,
-        "category": "nature",
-        "confidence": 0.27
+        "org_id": "1681080534",
+        "name": "Европа Cinema",
+        "address": "Улица Постышева3-я городская больницаКинотеатр ЛодзьПоказать парковкиОсобенностиКинотеатрКлуб виртуальной реальностиОрганизация и проведение детских праздниковОплата картойПарковкаКафе3",
+        "lat": 56.983587,
+        "lon": 40.982894,
+        "rating": 4.7,
+        "category": "entertainment",
+        "confidence": 0.21,
+        "avg_visit_duration_min": null
       }
     }
-  ]
+  ],
+  "waypoints": [
+    {
+      "order": 1,
+      "place_id": "143702844298",
+      "name": "Wow! land",
+      "lat": 57.005359,
+      "lon": 40.986532,
+      "category": "entertainment",
+      "suggested_time": "10:00"
+    },
+    {
+      "order": 2,
+      "place_id": "223340493117",
+      "name": "Печь",
+      "lat": 56.994519,
+      "lon": 40.979385,
+      "category": "food",
+      "suggested_time": "11:20"
+    },
+    {
+      "order": 3,
+      "place_id": "89233756764",
+      "name": "Восток",
+      "lat": 56.970958,
+      "lon": 41.01161,
+      "category": "sport",
+      "suggested_time": "13:35"
+    }
+  ],
+  "route_geometry": "wx|zIeddyFJ~B@J@NNzF?JDt@@NDZDb@Hf@Fd@BPl@tBDFJK`Ac@@LhA~JBRRK~BoARb@DJFHTN`@Db@BX?pA@B?J@d@@V?L^FNRl@BFbAxBDKLTtBfEHNFLj@`AJPdAlB@@JLn@cAhHoKPWDLl@tBFPLb@`@[DCXW|@uAzAlEVe@HTJXJZJMHAHQN]Z|@HMnCyEP[jAqBEQr@uA?aBE_A@G^eCz@eGrBmNPNJy@BQF]RHBSbFoPTo@BIFMHYTs@bAeDfDmKxAmE\\gBjAjBhCvC^E\\@N@PHXPT^~@`A`FtFTy@VZTw@Lg@J_@\\cADMXy@d@gAZq@PWZYn@YnA_@pAi@^Sn@k@r@{@f@w@p@uAZy@p@gBjCeHNa@tAiDvEgLVm@Ti@bAaCLYXGfAiCNY|BmEfAaBlEyFjByBfEoFfAyAbAe@tBiDfAgBxAcClCgErCgFZ~@\\dA^ZJV",
+  "total_distance_meters": 5432,
+  "total_duration_minutes": 275,
+  "route_id": "784676c7-3e12-4b3e-9a41-b59ff2b1de6d"
 }

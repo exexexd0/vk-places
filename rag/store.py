@@ -8,6 +8,7 @@ from langchain_postgres.v2.engine import Column
 from langchain_postgres.v2.indexes import HNSWIndex
 from langchain_postgres.v2.vectorstores import PGVectorStore
 
+from rag.categories import CANONICAL_CATEGORIES
 from rag.documents import places_to_documents
 from rag.embeddings import assert_embedding_dimension, build_embeddings
 from rag.normalize import Place
@@ -45,9 +46,8 @@ class PlaceStore:
         city: str,
         category: str,
         excluded_org_ids: list[str],
-        previous: dict | None,
     ) -> list[dict]:
-        query = retrieval_query(user_query, category, previous)
+        query = retrieval_query(user_query, category)
         rows = await self.vector_store.asimilarity_search_with_score(
             query,
             k=self.settings.top_k + len(excluded_org_ids),
@@ -63,6 +63,44 @@ class PlaceStore:
             if len(found) == self.settings.top_k:
                 break
         return found
+
+    async def top_by_rating(self, *, city: str, limit: int = 4) -> list[dict]:
+        table = _identifier(self.settings.vector_table)
+        with psycopg.connect(self.settings.sync_database_url) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    f"""
+                    SELECT org_id, name, address, category, lat, lon, rating
+                    FROM {table}
+                    WHERE city = %s AND lat IS NOT NULL AND lon IS NOT NULL
+                    ORDER BY rating DESC NULLS LAST, org_id
+                    """,
+                    (city,),
+                )
+                rows = cursor.fetchall()
+        selected = []
+        seen_categories: set[str] = set()
+        for org_id, name, address, category, lat, lon, rating in rows:
+            if category not in CANONICAL_CATEGORIES or category in seen_categories:
+                continue
+            selected.append(
+                {
+                    "org_id": org_id,
+                    "name": name,
+                    "address": address,
+                    "category": category,
+                    "city": city,
+                    "lat": lat,
+                    "lon": lon,
+                    "rating": rating,
+                    "distance": None,
+                    "confidence": 0,
+                }
+            )
+            seen_categories.add(category)
+            if len(selected) == limit:
+                break
+        return selected
 
 
 async def rebuild_index(settings: Settings, places: list[Place]) -> dict:

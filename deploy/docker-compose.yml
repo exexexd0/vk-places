@@ -14,3 +14,77 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+
+  osrm-fetch:
+    image: alpine:3.21
+    restart: "no"
+    environment:
+      OSRM_PBF_URL: https://download.openstreetmap.fr/extracts/russia/central_federal_district/ivanovo_oblast-latest.osm.pbf
+    volumes:
+      - osrm-data:/data
+      - ./osrm/fetch.sh:/fetch.sh:ro
+    entrypoint: ["/bin/sh", "/fetch.sh"]
+
+  osrm-car:
+    image: osrm/osrm-backend:v5.25.0
+    restart: unless-stopped
+    depends_on:
+      osrm-fetch:
+        condition: service_completed_successfully
+    environment:
+      OSRM_PROFILE: car
+    volumes:
+      - osrm-data:/data
+      - ./osrm/entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "grep -q ':1388 ' /proc/net/tcp"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 900s
+
+  osrm-foot:
+    image: osrm/osrm-backend:v5.25.0
+    restart: unless-stopped
+    depends_on:
+      osrm-car:
+        condition: service_healthy
+    environment:
+      OSRM_PROFILE: foot
+    volumes:
+      - osrm-data:/data
+      - ./osrm/entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "grep -q ':1388 ' /proc/net/tcp"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 900s
+
+  osrm:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    depends_on:
+      osrm-car:
+        condition: service_healthy
+      osrm-foot:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm/nginx.conf:/etc/nginx/nginx.conf:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- 'http://127.0.0.1:5000/nearest/v1/car/40.973,57.000?number=1' | grep -q Ok && wget -qO- 'http://127.0.0.1:5000/nearest/v1/foot/40.973,57.000?number=1' | grep -q Ok",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  osrm-data:

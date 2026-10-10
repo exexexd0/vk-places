@@ -21,6 +21,7 @@ class Settings:
     top_k: int
     city: str
     source_path: Path
+    osrm_base_url: str
 
     @property
     def sync_database_url(self) -> str:
@@ -52,4 +53,5 @@ def load_settings() -> Settings:
         top_k=int(os.environ.get("TOP_K", "5")),
         city=os.environ.get("CITY", "Иваново"),
         source_path=source,
+        osrm_base_url=os.environ.get("OSRM_BASE_URL", "http://127.0.0.1:5000"),
     )

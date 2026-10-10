@@ -10,6 +10,7 @@ from rag.graph import build_route_graph, initial_state, route_view, validate_rou
 from rag.jev import JevSelector
 from rag.normalize import load_places
 from rag.planner import LlmPlanner
+from rag.routing import OsrmRouter
 from rag.settings import ROOT, load_settings
 from rag.store import available_categories, open_store, rebuild_index
 
@@ -25,6 +26,7 @@ def main() -> None:
     route = commands.add_parser("route")
     route.add_argument("--query", required=True)
     route.add_argument("--city")
+    route.add_argument("--transport-mode", choices=["walk", "car", "transit"], default="walk")
     commands.add_parser("archive")
     args = parser.parse_args()
     if args.command == "report":
@@ -32,7 +34,7 @@ def main() -> None:
     elif args.command == "rebuild":
         asyncio.run(rebuild())
     elif args.command == "route":
-        asyncio.run(generate(args.query, args.city))
+        asyncio.run(generate(args.query, args.city, args.transport_mode))
     elif args.command == "archive":
         archive()
 
@@ -69,13 +71,20 @@ async def rebuild() -> dict:
     return report
 
 
-async def generate(user_query: str, city: str | None) -> dict:
+async def generate(user_query: str, city: str | None, transport_mode: str = "walk") -> dict:
     settings = load_settings()
     selected_city = city or settings.city
     store = await open_store(settings)
     categories = available_categories(settings)
-    app = build_route_graph(LlmPlanner(settings), store, JevSelector(settings))
-    state = await app.ainvoke(initial_state(user_query, selected_city, categories))
+    app = build_route_graph(
+        LlmPlanner(settings),
+        store,
+        JevSelector(settings),
+        router=OsrmRouter(settings.osrm_base_url),
+    )
+    state = await app.ainvoke(
+        initial_state(user_query, selected_city, categories, transport_mode=transport_mode)
+    )
     payload = route_view(state)
     validate_route(payload)
     _write_json("route.json", payload)

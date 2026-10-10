@@ -4,6 +4,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 docker compose -f deploy/docker-compose.yml up -d
 
+Compose поднимает Postgres и OSRM. Приложение само OSRM не запускает: `python -m rag route` ходит на `OSRM_BASE_URL`, по умолчанию `http://127.0.0.1:5000`. Сервис `osrm` слушает этот порт. Профили `car` и `foot` — два графа внутри compose, nginx раскладывает `/v1/car/` и `/v1/foot/` по ним. Первый запуск скачивает выгрузку Ивановской области и строит графы, это несколько минут.
+
 Четыре команды:
 
 python -m rag report
